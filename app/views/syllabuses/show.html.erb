@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @syllabus %>
+
+<div>
+  <%= link_to t('common.edit'), edit_syllabus_path(@syllabus) %> |
+  <%= link_to t('common.back'), syllabuses_path %>
+
+  <%= button_to t('common.destroy'), @syllabus, method: :delete, data: { turbo_confirm: '本当に削除しますか？' } %>
+</div>
