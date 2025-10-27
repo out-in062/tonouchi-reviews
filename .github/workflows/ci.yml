@@ -17,10 +17,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          # bundler-cache: true を削除
 
-      - name: Install dependencies # ★★★ このステップを追加 ★★★
-        run: bundle install
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bundle exec brakeman --no-pager
@@ -36,10 +37,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          # bundler-cache: true を削除
 
-      - name: Install dependencies # ★★★ このステップを追加 ★★★
-        run: bundle install
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bundle exec importmap audit
@@ -54,10 +56,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          # bundler-cache: true を削除
 
-      - name: Install dependencies # ★★★ このステップを追加 ★★★
-        run: bundle install
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
 
       - name: Lint code for consistent style
         run: bundle exec rubocop -f github
@@ -76,10 +79,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          # bundler-cache: true を削除
 
-      - name: Install dependencies # ★★★ このステップを追加 ★★★
-        run: bundle install
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
 
       - name: Run tests
         env:
