@@ -25,7 +25,7 @@ class SyllabusesController < ApplicationController
 
     respond_to do |format|
       if @syllabus.save
-        format.html { redirect_to @syllabus, notice: t('.notice') }
+        format.html { redirect_to @syllabus, notice: t(".notice") }
         format.json { render :show, status: :created, location: @syllabus }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class SyllabusesController < ApplicationController
   def update
     respond_to do |format|
       if @syllabus.update(syllabus_params)
-        format.html { redirect_to @syllabus, notice: t('.notice'), status: :see_other }
+        format.html { redirect_to @syllabus, notice: t(".notice"), status: :see_other }
         format.json { render :show, status: :ok, location: @syllabus }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class SyllabusesController < ApplicationController
     @syllabus.destroy!
 
     respond_to do |format|
-      format.html { redirect_to syllabuses_path, notice: t('.notice'), status: :see_other }
+      format.html { redirect_to syllabuses_path, notice: t(".notice"), status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -60,11 +60,11 @@ class SyllabusesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_syllabus
-      @syllabus = Syllabus.find(params.expect(:id))
+      @syllabus = Syllabus.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def syllabus_params
-      params.expect(syllabus: [ :code, :name ])
+      params.require(:syllabus).permit(:code, :name)
     end
 end

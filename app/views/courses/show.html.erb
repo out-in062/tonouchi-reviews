@@ -1,0 +1,22 @@
+<h1><%= @course.name %></h1>
+
+<p><strong>Instructor:</strong> <%= @course.instructor %></p>
+<p><strong>Department:</strong> <%= @course.department %></p>
+<p><strong>Semester:</strong> <%= @course.semester %></p>
+<p><strong>Year:</strong> <%= @course.year %></p>
+<p><strong>Credits:</strong> <%= @course.credits %></p>
+<p><strong>Description:</strong> <%= @course.description %></p>
+
+<h2>Reviews</h2>
+
+<%= link_to "Add a review", new_course_review_path(@course) %>
+
+<ul>
+  <% @reviews.each do |review| %>
+    <li>
+      <h3><%= review.title %></h3>
+      <p><strong>Rating:</strong> <%= review.rating %></p>
+      <p><%= review.content %></p>
+    </li>
+  <% end %>
+</ul>
