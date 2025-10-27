@@ -10,7 +10,7 @@ class ReviewsController < ApplicationController
     @review = @course.reviews.new(review_params)
     @review.user = current_user
     if @review.save
-      redirect_to course_path(@course), notice: 'Review was successfully created.'
+      redirect_to course_path(@course), notice: "Review was successfully created."
     else
       render :new, status: :unprocessable_entity
     end

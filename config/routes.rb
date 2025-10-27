@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :courses, only: [:index, :show] do
-    resources :reviews, only: [:new, :create]
+  resources :courses, only: [ :index, :show ] do
+    resources :reviews, only: [ :new, :create ]
   end
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"

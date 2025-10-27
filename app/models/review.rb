@@ -7,5 +7,5 @@ class Review < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
 
-  validates :user_id, uniqueness: { scope: :course_id, message: 'has already reviewed this course' }
+  validates :user_id, uniqueness: { scope: :course_id, message: "has already reviewed this course" }
 end
