@@ -43,8 +43,12 @@ jobs:
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
 
+      # ★★★ ここから下の2つのステップを修正・追加 ★★★
+      - name: Generate binstubs
+        run: bundle binstubs importmap-rails
+
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bundle exec importmap audit
+        run: bin/importmap audit
 
   lint:
     runs-on: ubuntu-latest
