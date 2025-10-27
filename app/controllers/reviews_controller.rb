@@ -1,3 +1,4 @@
+# app/controllers/reviews_controller.rb
 class ReviewsController < ApplicationController
   before_action :require_login
   before_action :set_course
@@ -26,9 +27,10 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:rating, :difficulty, :workload, :title, :content, :attendance_required, :exam_info, :tips, :semester_taken, :year_taken)
   end
 
-  def require_login
-    unless current_user
-      redirect_to login_path, alert: "You must be logged in to do that."
-    end
-  end
+  # ★★★ このメソッドを削除する ★★★
+  # def require_login
+  #   unless current_user
+  #     redirect_to login_path, alert: "You must be logged in to do that."
+  #   end
+  # end
 end

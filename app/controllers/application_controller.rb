@@ -1,12 +1,20 @@
+# app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
-
+  # `current_user` メソッドをビューでも使えるようにヘルパーメソッドとして定義
   helper_method :current_user
 
   private
 
+  # セッションにuser_idがあれば、対応するユーザーを返す
+  # なければnilを返す
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  # ログインしていなければログインページにリダイレクトする
+  def require_login
+    unless current_user
+      redirect_to login_path, alert: "You must be logged in to access this section."
+    end
   end
 end

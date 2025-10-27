@@ -1,23 +1,28 @@
+# config/routes.rb
+
 Rails.application.routes.draw do
-  resources :courses, only: [ :index, :show ] do
-    resources :reviews, only: [ :new, :create ]
-  end
-  get "login", to: "sessions#new"
-  post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
-  get "signup", to: "users#new"
-  post "signup", to: "users#create"
-  resources :syllabuses
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
   # Defines the root path route ("/")
-  root "syllabuses#index"
+  root "courses#index" # syllabuses#index より courses#index の方が一般的かと思われます
+
+  # ログイン/ログアウト/ユーザー登録
+  get    "login"   => "sessions#new"
+  post   "login"   => "sessions#create"
+  delete "logout"  => "sessions#destroy"
+
+  get    "signup"  => "users#new"
+  # UsersControllerTest が resources :users を期待しているため、以下のように書くのが最も簡単です
+  resources :users, only: [:new, :create]
+
+  # コースとレビュー
+  resources :courses, only: [:index, :show] do
+    resources :reviews, only: [:new, :create]
+  end
+
+  # Syllabuses のルーティング
+  # もし courses と syllabuses が同じものなら、どちらかに統一すべきです
+  # ここでは一旦残しておきます
+  resources :syllabuses
+
+  # Reveal health status on /up that returns 200...
+  get "up" => "rails/health#show", as: :rails_health_check
 end
