@@ -8,7 +8,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should post create" do
     user = users(:one)
-    post login_path, params: { session: { email: user.email, password: 'password' } }
+    post login_path, params: { session: { email: user.email, password: "password" } }
     # ログイン後にルートURLにリダイレクトされることを検証
     assert_redirected_to root_url
   end

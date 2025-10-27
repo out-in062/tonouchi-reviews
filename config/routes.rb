@@ -11,11 +11,11 @@ Rails.application.routes.draw do
 
   get    "signup"  => "users#new"
   # UsersControllerTest が resources :users を期待しているため、以下のように書くのが最も簡単です
-  resources :users, only: [:new, :create]
+  resources :users, only: [ :new, :create ]
 
   # コースとレビュー
-  resources :courses, only: [:index, :show] do
-    resources :reviews, only: [:new, :create]
+  resources :courses, only: [ :index, :show ] do
+    resources :reviews, only: [ :new, :create ]
   end
 
   # Syllabuses のルーティング

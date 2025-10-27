@@ -10,7 +10,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # 'create' アクションは通常POSTリクエストです
   test "should post create" do
     # resources :users, only: [:create] に対応
-    assert_difference('User.count') do
+    assert_difference("User.count") do
       post users_path, params: { user: {
         name: "Example User",
         email: "user@example.com",

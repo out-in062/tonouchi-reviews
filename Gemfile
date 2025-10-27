@@ -63,4 +63,4 @@ group :test do
   gem "rails-controller-testing" # ★★★ 追加 ★★★
 end
 
-gem 'bcrypt', '~> 3.1.7'
+gem "bcrypt", "~> 3.1.7"
