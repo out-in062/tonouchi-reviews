@@ -49,7 +49,7 @@ jobs:
 
       # ★★★ ここに importmap audit のステップを追加 ★★★
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bundle exec importmap audit
+        run: bundle exec rails importmap:audit
 
   test:
     runs-on: ubuntu-latest
