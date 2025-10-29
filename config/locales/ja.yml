@@ -12,6 +12,17 @@ ja:
       syllabus:
         name: 科目名
         code: 科目コード
+      review:
+        rating: 総合評価
+        difficulty: 難易度
+        workload: 課題量
+        title: タイトル
+        content: 口コミ本文
+        attendance_required: 出席
+        exam_info: 試験情報
+        tips: アドバイス・コツ
+        semester_taken: 受講学期
+        year_taken: 受講年度
     errors:
       messages:
         blank: を入力してください
@@ -28,3 +39,15 @@ ja:
       notice: シラバスを更新しました。
     destroy:
       notice: シラバスを削除しました。
+  reviews:
+    new:
+      rating: 総合評価
+      difficulty: 難易度
+      workload: 課題量
+      title: タイトル
+      content: 口コミ本文
+      attendance_required: 出席
+      exam_info: 試験情報
+      tips: アドバイス・コツ
+      semester_taken: 受講学期
+      year_taken: 受講年度

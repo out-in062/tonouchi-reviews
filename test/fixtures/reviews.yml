@@ -1,31 +1,61 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  rating: 1
-  difficulty: 1
-  workload: 1
-  title: MyString
-  content: MyText
-  attendance_required: false
-  exam_info: MyText
-  tips: MyText
-  semester_taken: MyString
-  year_taken: 1
-  published: false
+  rating: 5
+  difficulty: 2
+  workload: 3
+  title: "とても良い授業でした"
+  content: "先生が親切で、質問にも丁寧に答えてくれました。"
+  attendance_required: true
+  exam_info: "期末試験一回"
+  tips: "毎回の授業にしっかり出席することが大事です。"
+  semester_taken: "前期"
+  year_taken: 2023
+  published: true
   user: one
   course: one
 
 two:
-  rating: 1
-  difficulty: 1
-  workload: 1
-  title: MyString
-  content: MyText
+  rating: 3
+  difficulty: 4
+  workload: 5
+  title: "課題が多い"
+  content: "毎週の課題が多くて大変でした。"
   attendance_required: false
-  exam_info: MyText
-  tips: MyText
-  semester_taken: MyString
-  year_taken: 1
-  published: false
+  exam_info: "レポート提出"
+  tips: "計画的に課題を進めることが必要です。"
+  semester_taken: "後期"
+  year_taken: 2023
+  published: true
+  user: two
+  course: two
+
+three:
+  rating: 4
+  difficulty: 3
+  workload: 3
+  title: "面白いトピック"
+  content: "内容は興味深く、面白かったです。"
+  attendance_required: true
+  exam_info: "中間・期末試験"
+  tips: "教科書をよく読んでおくこと。"
+  semester_taken: "前期"
+  year_taken: 2022
+  published: true
+  user: one
+  course: two
+
+four:
+  rating: 2
+  difficulty: 5
+  workload: 4
+  title: "単位を落とした"
+  content: "試験が難しすぎて単位を落としました。"
+  attendance_required: false
+  exam_info: "期末試験のみ"
+  tips: "過去問を手に入れると良いかもしれません。"
+  semester_taken: "後期"
+  year_taken: 2022
+  published: true
   user: two
   course: two
