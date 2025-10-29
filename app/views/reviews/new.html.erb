@@ -1,4 +1,4 @@
-<h1>New Review for <%= @course.name %></h1>
+<h1><%= @course.name %>のレビューを投稿する</h1>
 
 <%= form_with(model: [@course, @review]) do |form| %>
   <% if @review.errors.any? %>
@@ -14,21 +14,56 @@
   <% end %>
 
   <div>
-    <%= form.label :rating %><br>
-    <%= form.number_field :rating %>
+    <%= form.label :rating, t(".rating") %><br>
+    <%= form.number_field :rating, in: 1..5 %>
   </div>
 
   <div>
-    <%= form.label :title %><br>
+    <%= form.label :difficulty, t(".difficulty") %><br>
+    <%= form.number_field :difficulty, in: 1..5 %>
+  </div>
+
+  <div>
+    <%= form.label :workload, t(".workload") %><br>
+    <%= form.number_field :workload, in: 1..5 %>
+  </div>
+
+  <div>
+    <%= form.label :title, t(".title") %><br>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :content %><br>
+    <%= form.label :content, t(".content") %><br>
     <%= form.text_area :content %>
   </div>
 
   <div>
-    <%= form.submit "Create Review" %>
+    <%= form.label :attendance_required, t(".attendance_required") %><br>
+    <%= form.check_box :attendance_required %>
+  </div>
+
+  <div>
+    <%= form.label :exam_info, t(".exam_info") %><br>
+    <%= form.text_area :exam_info %>
+  </div>
+
+  <div>
+    <%= form.label :tips, t(".tips") %><br>
+    <%= form.text_area :tips %>
+  </div>
+
+  <div>
+    <%= form.label :semester_taken, t(".semester_taken") %><br>
+    <%= form.text_field :semester_taken %>
+  </div>
+
+  <div>
+    <%= form.label :year_taken, t(".year_taken") %><br>
+    <%= form.number_field :year_taken %>
+  </div>
+
+  <div>
+    <%= form.submit t("helpers.submit.create") %>
   </div>
 <% end %>

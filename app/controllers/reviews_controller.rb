@@ -26,11 +26,4 @@ class ReviewsController < ApplicationController
   def review_params
     params.require(:review).permit(:rating, :difficulty, :workload, :title, :content, :attendance_required, :exam_info, :tips, :semester_taken, :year_taken)
   end
-
-  # ★★★ このメソッドを削除する ★★★
-  # def require_login
-  #   unless current_user
-  #     redirect_to login_path, alert: "You must be logged in to do that."
-  #   end
-  # end
 end
