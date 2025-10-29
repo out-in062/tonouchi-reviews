@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          bundle install --with development test --jobs 4 --retry 3
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bundle exec brakeman --no-pager
@@ -42,12 +42,11 @@ jobs:
       - name: Install dependencies
         run: |
           bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          bundle install --with development test --jobs 4 --retry 3
 
       - name: Lint code for consistent style
         run: bundle exec rubocop -f github
 
-      # ★★★ ここに importmap audit のステップを追加 ★★★
       - name: Scan for security vulnerabilities in JavaScript dependencies
         env:
           RAILS_ENV: test
@@ -71,7 +70,7 @@ jobs:
       - name: Install dependencies
         run: |
           bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+          bundle install --with development test --jobs 4 --retry 3
 
       - name: Run tests
         env:
