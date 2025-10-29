@@ -50,7 +50,7 @@ jobs:
       - name: Scan for security vulnerabilities in JavaScript dependencies
         env:
           RAILS_ENV: test
-        run: bundle exec rake importmap:audit
+        run: bin/rails importmap:audit
 
   test:
     runs-on: ubuntu-latest
