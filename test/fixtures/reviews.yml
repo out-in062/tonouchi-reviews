@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rating: 1
+  difficulty: 1
+  workload: 1
+  title: MyString
+  content: MyText
+  attendance_required: false
+  exam_info: MyText
+  tips: MyText
+  semester_taken: MyString
+  year_taken: 1
+  published: false
+  user: one
+  course: one
+
+two:
+  rating: 1
+  difficulty: 1
+  workload: 1
+  title: MyString
+  content: MyText
+  attendance_required: false
+  exam_info: MyText
+  tips: MyText
+  semester_taken: MyString
+  year_taken: 1
+  published: false
+  user: two
+  course: two

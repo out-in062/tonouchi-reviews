@@ -1,0 +1,21 @@
+# test/fixtures/courses.yml
+
+one:
+  code: "INF101"
+  name: "情報科学入門"
+  instructor: "佐藤 太郎"
+  department: "情報学部"
+  semester: "前期"
+  year: 2024
+  credits: 2
+  description: "情報科学の基本的な概念を学びます。"
+
+two:
+  code: "PRG202"
+  name: "プログラミング応用"
+  instructor: "鈴木 花子"
+  department: "情報学部"
+  semester: "後期"
+  year: 2024
+  credits: 2
+  description: "より高度なプログラミング技術を習得します。"

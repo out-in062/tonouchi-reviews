@@ -1,0 +1,30 @@
+ja:
+  helpers:
+    submit:
+      create: 登録する
+      update: 更新する
+  common:
+    back: 戻る
+    edit: 編集
+    destroy: 削除
+  activerecord:
+    attributes:
+      syllabus:
+        name: 科目名
+        code: 科目コード
+    errors:
+      messages:
+        blank: を入力してください
+  syllabuses:
+    index:
+      title: シラバス一覧
+    new:
+      link: 新しいシラバス
+    show:
+      link: 詳細
+    create:
+      notice: シラバスを登録しました。
+    update:
+      notice: シラバスを更新しました。
+    destroy:
+      notice: シラバスを削除しました。
