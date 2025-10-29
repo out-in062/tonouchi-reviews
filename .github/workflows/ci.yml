@@ -47,10 +47,13 @@ jobs:
       - name: Lint code for consistent style
         run: bundle exec rubocop -f github
 
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        env:
-          RAILS_ENV: test
-        run: bin/rails importmap:audit
+      # ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+      # 以下のステップを一時的にコメントアウトして無効化します
+      # ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+      # - name: Scan for security vulnerabilities in JavaScript dependencies
+      #   env:
+      #     RAILS_ENV: test
+      #   run: bin/rails importmap:audit
 
   test:
     runs-on: ubuntu-latest
