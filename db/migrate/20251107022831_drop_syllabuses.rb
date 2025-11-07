@@ -7,4 +7,3 @@ class DropSyllabuses < ActiveRecord::Migration[8.0]
       t.datetime "updated_at", null: false
     end
   end
-end
