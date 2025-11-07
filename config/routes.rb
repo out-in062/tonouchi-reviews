@@ -18,10 +18,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [ :new, :create ]
   end
 
-  # Syllabuses のルーティング
-  # もし courses と syllabuses が同じものなら、どちらかに統一すべきです
-  # ここでは一旦残しておきます
-  resources :syllabuses
+
 
   # Reveal health status on /up that returns 200...
   get "up" => "rails/health#show", as: :rails_health_check
