@@ -6,12 +6,14 @@ on:
     branches: [main]
 
 jobs:
-  scan_ruby:
+  security:
+    name: Security Scan
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -23,16 +25,20 @@ jobs:
           bundle config path vendor/bundle
           bundle install --with development test --jobs 4 --retry 3
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
+      - name: Scan for common Rails security vulnerabilities
         run: bundle exec brakeman --no-pager
 
-  # --- scan_js ジョブを完全に削除 ---
+      - name: Scan for security vulnerabilities in JavaScript dependencies
+        run: bin/rails importmap:audit
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -47,19 +53,11 @@ jobs:
       - name: Lint code for consistent style
         run: bundle exec rubocop -f github
 
-      # ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-      # 以下のステップを一時的にコメントアウトして無効化します
-      # ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-      # - name: Scan for security vulnerabilities in JavaScript dependencies
-      #   env:
-      #     RAILS_ENV: test
-      #   run: bin/rails importmap:audit
-
   test:
+    name: Rails Tests
     runs-on: ubuntu-latest
-
     steps:
-      - name: Install packages
+      - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
 
       - name: Checkout code
@@ -74,16 +72,78 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --with development test --jobs 4 --retry 3
+      
+      - name: Prepare database
+        env:
+          RAILS_ENV: test
+        run: bin/rails db:prepare
 
       - name: Run tests
         env:
           RAILS_ENV: test
-        run: bundle exec rails db:test:prepare test test:system
+        run: bundle exec rails test test:system
 
-      - name: Keep screenshots from failed system tests
+      - name: Upload screenshots from failed system tests
         uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
+          if-no-files-found: ignore
+
+  e2e:
+    name: E2E Tests (Playwright)
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --with development test --jobs 4 --retry 3
+
+      - name: Prepare database
+        env:
+          RAILS_ENV: test
+        run: bin/rails db:prepare
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: e2e-tests/package-lock.json
+
+      - name: Install Playwright dependencies
+        working-directory: e2e-tests
+        run: npm install
+
+      - name: Install Playwright browsers
+        working-directory: e2e-tests
+        run: npx playwright install --with-deps
+
+      - name: Start Rails server
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rails server &
+          sleep 5
+
+      - name: Run Playwright tests
+        working-directory: e2e-tests
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: playwright-report
+          path: e2e-tests/playwright-report/
           if-no-files-found: ignore
