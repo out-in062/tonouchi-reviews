@@ -30,7 +30,7 @@ jobs:
         run: bundle exec brakeman --no-pager
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/rails importmap:audit
+        run: bin/importmap audit
 
   lint:
     name: Lint
