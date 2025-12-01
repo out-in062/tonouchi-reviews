@@ -1,2 +1,5 @@
 [tools]
 ruby = "3.4.6"
+
+[tasks.test_e2e]
+run = "cd e2e-tests && npm test"
