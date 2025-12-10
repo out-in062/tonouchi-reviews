@@ -1,22 +1,30 @@
-<h1><%= @course.name %></h1>
+<% provide(:title, @course.name) %>
 
-<p><strong>Instructor:</strong> <%= @course.instructor %></p>
-<p><strong>Department:</strong> <%= @course.department %></p>
-<p><strong>Semester:</strong> <%= @course.semester %></p>
-<p><strong>Year:</strong> <%= @course.year %></p>
-<p><strong>Credits:</strong> <%= @course.credits %></p>
-<p><strong>Description:</strong> <%= @course.description %></p>
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4"><%= @course.name %></h1>
+    <p class="text-gray-600 text-lg mb-2">担当教員: <%= @course.instructor %></p>
+    <p class="text-gray-500 mb-4">授業コード: <%= @course.code %></p>
 
-<h2>Reviews</h2>
+    <div class="border-t border-gray-200 pt-4 mt-4">
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">授業情報</h2>
+      <ul class="list-disc list-inside text-gray-700">
+        <li>学部・学科: <%= @course.department %></li>
+        <li>開講学期: <%= @course.semester %></li>
+        <li>開講年度: <%= @course.year %></li>
+        <li>単位数: <%= @course.credits %></li>
+      </ul>
+    </div>
 
-<%= link_to "Add a review", new_course_review_path(@course) %>
+    <% if @course.description.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">授業概要</h2>
+        <p class="text-gray-700 leading-relaxed"><%= simple_format(@course.description) %></p>
+      </div>
+    <% end %>
 
-<ul>
-  <% @reviews.each do |review| %>
-    <li>
-      <h3><%= review.title %></h3>
-      <p><strong>Rating:</strong> <%= review.rating %></p>
-      <p><%= review.content %></p>
-    </li>
-  <% end %>
-</ul>
+    <div class="mt-8">
+      <%= link_to "授業一覧に戻る", courses_path, class: "text-blue-600 hover:text-blue-800 font-medium" %>
+    </div>
+  </div>
+</div>

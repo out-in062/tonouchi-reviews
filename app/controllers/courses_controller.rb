@@ -1,3 +1,4 @@
+# app/controllers/courses_controller.rb
 class CoursesController < ApplicationController
   def index
     @courses = Course.all
@@ -5,6 +6,5 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
-    @reviews = @course.reviews
   end
 end
