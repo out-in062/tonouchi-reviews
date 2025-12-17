@@ -1,0 +1,81 @@
+<% provide(:title, @review.title) %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4" data-testid="review-title"><%= @review.title %></h1>
+    <p class="text-gray-600 mb-2">Rating: <%= @review.rating %> / 5</p>
+    <p class="text-gray-500 mb-4" data-testid="review-author">Posted by: <%= @review.user.name %> for <%= link_to @review.course.name, course_path(@review.course), class: "text-blue-600 hover:text-blue-800" %></p>
+
+    <div class="border-t border-gray-200 pt-4 mt-4">
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">Review Content</h2>
+      <p class="text-gray-700 leading-relaxed"><%= simple_format(@review.content) %></p>
+    </div>
+
+    <% if @review.difficulty.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Difficulty</h2>
+        <p class="text-gray-700"><%= @review.difficulty %> / 5</p>
+      </div>
+    <% end %>
+
+    <% if @review.workload.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Workload</h2>
+        <p class="text-gray-700"><%= @review.workload %> / 5</p>
+      </div>
+    <% end %>
+
+    <% if @review.attendance_required.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Attendance Required</h2>
+        <p class="text-gray-700"><%= @review.attendance_required ? "Yes" : "No" %></p>
+      </div>
+    <% end %>
+
+    <% if @review.exam_info.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Exam Information</h2>
+        <p class="text-gray-700 leading-relaxed"><%= simple_format(@review.exam_info) %></p>
+      </div>
+    <% end %>
+
+    <% if @review.tips.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Tips</h2>
+        <p class="text-gray-700 leading-relaxed"><%= simple_format(@review.tips) %></p>
+      </div>
+    <% end %>
+
+    <% if @review.semester_taken.present? || @review.year_taken.present? %>
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">When Taken</h2>
+        <p class="text-gray-700">
+          <% if @review.semester_taken.present? %><%= @review.semester_taken %> <% end %>
+          <% if @review.year_taken.present? %><%= @review.year_taken %><% end %>
+        </p>
+      </div>
+    <% end %>
+
+    <div class="border-t border-gray-200 pt-4 mt-4">
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">Was this review helpful?</h2>
+      <div class="flex items-center">
+        <%= form_with(model: [@review, ReviewReaction.new], url: review_review_reactions_path(@review), method: :post) do |form| %>
+          <%= form.hidden_field :reaction_type, value: 'helpful' %>
+          <%= form.submit "👍 Helpful (#{@review.review_reactions.where(reaction_type: 'helpful').count})", class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+        <% end %>
+        <%= form_with(model: [@review, ReviewReaction.new], url: review_review_reactions_path(@review), method: :post, class: "ml-2") do |form| %>
+          <%= form.hidden_field :reaction_type, value: 'not_helpful' %>
+          <%= form.submit "👎 Not Helpful (#{@review.review_reactions.where(reaction_type: 'not_helpful').count})", class: "bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <% if current_user == @review.user %>
+        <%= link_to "Edit", edit_review_path(@review), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
+        <%= button_to "Delete", review_path(@review), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" %>
+      <% end %>
+      <%= link_to "Back to Course", course_path(@review.course), class: "text-blue-600 hover:text-blue-800 font-medium ml-4" %>
+    </div>
+  </div>
+</div>
