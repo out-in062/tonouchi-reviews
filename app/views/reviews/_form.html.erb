@@ -1,0 +1,69 @@
+<%# app/views/reviews/_form.html.erb %>
+
+<%= form_with(model: (@review.new_record? ? [@course, @review] : @review)) do |form| %>
+  <% if @review.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% @review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :rating, t(".rating") %><br>
+    <%= form.number_field :rating, in: 1..5, data: { testid: "review-rating-input" } %>
+  </div>
+
+  <div>
+    <%= form.label :difficulty, t(".difficulty") %><br>
+    <%= form.number_field :difficulty, in: 1..5 %>
+  </div>
+
+  <div>
+    <%= form.label :workload, t(".workload") %><br>
+    <%= form.number_field :workload, in: 1..5 %>
+  </div>
+
+  <div>
+    <%= form.label :title, t(".title") %><br>
+    <%= form.text_field :title, data: { testid: "review-title-input" } %>
+  </div>
+
+  <div>
+    <%= form.label :content, t(".content") %><br>
+    <%= form.text_area :content, data: { testid: "review-content-input" } %>
+  </div>
+
+  <div>
+    <%= form.label :attendance_required, t(".attendance_required") %><br>
+    <%= form.check_box :attendance_required %>
+  </div>
+
+  <div>
+    <%= form.label :exam_info, t(".exam_info") %><br>
+    <%= form.text_area :exam_info %>
+  </div>
+
+  <div>
+    <%= form.label :tips, t(".tips") %><br>
+    <%= form.text_area :tips %>
+  </div>
+
+  <div>
+    <%= form.label :semester_taken, t(".semester_taken") %><br>
+    <%= form.text_field :semester_taken %>
+  </div>
+
+  <div>
+    <%= form.label :year_taken, t(".year_taken") %><br>
+    <%= form.number_field :year_taken %>
+  </div>
+
+  <div>
+    <%= form.submit t("helpers.submit.#{@review.new_record? ? 'create' : 'update'}"), data: { testid: "review-submit-button" } %>
+  </div>
+<% end %>
