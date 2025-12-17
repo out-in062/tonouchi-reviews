@@ -5,6 +5,7 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.find(params[:id])
+    @course = Course.includes(reviews: :user).find(params[:id])
+    @review = Review.new
   end
 end
