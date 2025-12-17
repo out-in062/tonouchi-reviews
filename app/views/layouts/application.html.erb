@@ -26,19 +26,27 @@
     <header class="bg-white shadow-md">
       <nav class="container mx-auto flex justify-between items-center p-4">
         <div>
-          <%= link_to "Tonouchi Class Reviews", root_path, class: "text-xl font-bold" %>
+          <%= link_to "Tonouchi Class Reviews", root_path, class: "text-xl font-bold", data: { testid: "home-link" } %>
+          <%= link_to "Courses", courses_path, class: "ml-4 text-blue-600 hover:text-blue-800", data: { testid: "courses-link" } %>
         </div>
         <div>
           <% if current_user %>
             <span class="mr-4">Logged in as <%= current_user.name %></span>
-            <%= button_to "Log out", logout_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+            <%= button_to "Log out", logout_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", data: { testid: "logout-button" } %>
           <% else %>
-            <%= link_to "Sign up", signup_path, class: "mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-            <%= link_to "Log in", login_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+            <%= link_to "Sign up", signup_path, class: "mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded", data: { testid: "signup-link" } %>
+            <%= link_to "Log in", login_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded", data: { testid: "login-link" } %>
           <% end %>
         </div>
       </nav>
     </header>
+    <div class="container mx-auto px-4 mt-4">
+      <% flash.each do |type, msg| %>
+        <div class="<%= flash_class(type) %> p-3 rounded-md mb-4" data-testid="flash-message">
+          <%= msg %>
+        </div>
+      <% end %>
+    </div>
     <main class="container mx-auto p-4">
       <%= yield %>
     </main>

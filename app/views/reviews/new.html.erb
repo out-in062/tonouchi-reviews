@@ -15,7 +15,7 @@
 
   <div>
     <%= form.label :rating, t(".rating") %><br>
-    <%= form.number_field :rating, in: 1..5 %>
+    <%= form.number_field :rating, in: 1..5, data: { testid: "review-rating-input" } %>
   </div>
 
   <div>
@@ -30,12 +30,12 @@
 
   <div>
     <%= form.label :title, t(".title") %><br>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, data: { testid: "review-title-input" } %>
   </div>
 
   <div>
     <%= form.label :content, t(".content") %><br>
-    <%= form.text_area :content %>
+    <%= form.text_area :content, data: { testid: "review-content-input" } %>
   </div>
 
   <div>
@@ -64,6 +64,6 @@
   </div>
 
   <div>
-    <%= form.submit t("helpers.submit.create") %>
+    <%= form.submit t("helpers.submit.create"), data: { testid: "review-submit-button" } %>
   </div>
 <% end %>

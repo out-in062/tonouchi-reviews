@@ -16,30 +16,30 @@
 
   <div>
     <%= form.label :name %><br>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, data: { testid: "user-name-input" } %>
   </div>
 
   <div>
     <%= form.label :email %><br>
-    <%= form.email_field :email %>
+    <%= form.email_field :email, data: { testid: "user-email-input" } %>
   </div>
 
   <div>
     <%= form.label :password %><br>
-    <%= form.password_field :password %>
+    <%= form.password_field :password, data: { testid: "user-password-input" } %>
   </div>
 
   <div>
     <%= form.label :password_confirmation %><br>
-    <%= form.password_field :password_confirmation %>
+    <%= form.password_field :password_confirmation, data: { testid: "user-password-confirmation-input" } %>
   </div>
 
   <div>
     <%= form.label :student_id %><br>
-    <%= form.text_field :student_id %>
+    <%= form.text_field :student_id, data: { testid: "user-student-id-input" } %>
   </div>
 
   <div>
-    <%= form.submit "Sign up" %>
+    <%= form.submit "Sign up", data: { testid: "signup-submit-button" } %>
   </div>
 <% end %>
