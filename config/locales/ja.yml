@@ -8,9 +8,17 @@ ja:
       log_out: ログアウト
       sign_up: 新規登録
       log_in: ログイン
+      mypage: マイページ
   courses:
     index:
       instructor: 担当教員
+      search_placeholder: 授業名、教員名、授業コードで検索
+      search_button: 検索
+      all_departments: 全ての学部
+      filter_button: フィルター
+      sort_rating_desc: 評価順
+      sort_newest: 新着順
+      sort_code_asc: 授業コード順
     show:
       instructor: 担当教員
       code: 授業コード
@@ -70,6 +78,16 @@ ja:
       password_confirmation: パスワード（確認）
       student_id: 学籍番号
       submit: 新規登録
+    show:
+      title: '%{name}さんのマイページ'
+      heading: '%{name}さんのマイページ'
+      profile_info: プロフィール情報
+      name: 名前
+      email: メールアドレス
+      student_id: 学籍番号
+      joined_on: 登録日
+      my_reviews: 投稿した口コミ
+      no_reviews: まだ口コミを投稿していません。
   helpers:
     submit:
       create: 登録する
@@ -119,3 +137,6 @@ ja:
       notice: シラバスを更新しました。
     destroy:
       notice: シラバスを削除しました。
+  date:
+    formats:
+      long: "%Y年%m月%d日 %H時%M分"

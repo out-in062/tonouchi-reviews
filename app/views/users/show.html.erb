@@ -1,0 +1,26 @@
+<% provide(:title, t("users.show.title", name: @user.name)) %>
+
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6"><%= t("users.show.heading", name: @user.name) %></h1>
+
+  <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4"><%= t("users.show.profile_info") %></h2>
+    <p class="text-gray-800 mb-2"><%= t("users.show.name") %>: <%= @user.name %></p>
+    <p class="text-gray-800 mb-2"><%= t("users.show.email") %>: <%= @user.email %></p>
+    <% if @user.student_id.present? %>
+      <p class="text-gray-800 mb-2"><%= t("users.show.student_id") %>: <%= @user.student_id %></p>
+    <% end %>
+    <p class="text-gray-800 mb-2"><%= t("users.show.joined_on") %>: <%= l(@user.created_at, format: :long) %></p>
+  </div>
+
+  <div class="border-t border-gray-200 pt-6 mt-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4"><%= t("users.show.my_reviews") %></h2>
+    <% if @reviews.any? %>
+      <div class="space-y-4">
+        <%= render partial: 'reviews/review', collection: @reviews, as: :review %>
+      </div>
+    <% else %>
+      <p><%= t("users.show.no_reviews") %></p>
+    <% end %>
+  </div>
+</div>
