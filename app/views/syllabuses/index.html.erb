@@ -1,0 +1,44 @@
+<div class="container mx-auto px-4">
+  <h1 class="text-2xl font-bold my-4">Syllabus</h1>
+
+  <%= form_with(url: syllabuses_path, method: :get, local: true, class: "bg-white shadow-md rounded-lg p-4 mb-4") do |form| %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div>
+        <%= form.label :faculty, class: "block text-gray-700 font-bold mb-2" %>
+        <%= form.text_field :faculty, value: params[:faculty], class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div>
+        <%= form.label :department, class: "block text-gray-700 font-bold mb-2" %>
+        <%= form.text_field :department, value: params[:department], class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div>
+        <%= form.label :day_of_week, class: "block text-gray-700 font-bold mb-2" %>
+        <%= form.select :day_of_week, options_for_select(['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], params[:day_of_week]), {}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+      <div>
+        <%= form.label :time_slot, class: "block text-gray-700 font-bold mb-2" %>
+        <%= form.select :time_slot, options_for_select((1..6).to_a.unshift(''), params[:time_slot]), {}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      </div>
+    </div>
+    <div class="text-right mt-4">
+      <%= form.submit "Search", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% @courses.each do |course| %>
+      <div class="bg-white shadow-md rounded-lg p-4">
+        <h2 class="text-xl font-semibold mb-2"><%= course.name %></h2>
+        <p class="text-gray-600">Faculty: <%= course.faculty %></p>
+        <p class="text-gray-600">Department: <%= course.department %></p>
+        <p class="text-gray-600">Academic Year: <%= course.academic_year %></p>
+        <p class="text-gray-600">Season: <%= course.season %></p>
+        <p class="text-gray-600">Day of Week: <%= course.day_of_week %></p>
+        <p class="text-gray-600">Time Slot: <%= course.time_slot %></p>
+        <p class="text-gray-600">Instructor: <%= course.instructor %></p>
+        <p class="text-gray-600">Credits: <%= course.credits %></p>
+        <p class="text-gray-700 mt-2"><%= course.description %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
