@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   # ログインしていなければログインページにリダイレクトする
   def require_login
     unless current_user
-      redirect_to login_path, alert: "You must be logged in to access this section."
+      redirect_to login_path, alert: "ログインが必要です。"
     end
   end
 end

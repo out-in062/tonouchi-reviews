@@ -7,7 +7,7 @@ class ReviewsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    log_in_as(@user) # newアクションのテストの前にログイン
+    log_in_as(users(:two)) # newアクションのテストの前にログイン
     get new_course_review_path(@course)
     assert_response :success
   end

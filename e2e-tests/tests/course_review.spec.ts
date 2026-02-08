@@ -48,7 +48,8 @@ test.describe("Course and Review", () => {
         .fill(testUser.password);
       await page.getByTestId("user-student-id-input").fill(testUser.studentId);
       await page.getByTestId("signup-submit-button").click();
-      await expect(page.getByText(`Logged in as ${testUser.name}`)).toBeVisible();
+      await page.waitForURL('**/'); // Wait for the redirect to complete
+      await expect(page.getByText(`ログイン中: ${testUser.name}`)).toBeVisible();
     });
 
     // Test Case 3: Submit a review
@@ -95,14 +96,17 @@ test.describe("Course and Review", () => {
 
       // Go to the review and edit it
       await page.getByRole("link", { name: originalTitle }).click();
-      await page.getByRole("link", { name: "Edit" }).click();
+      await page.getByRole("link", { name: "編集" }).click();
       
       const updatedTitle = `Updated Title ${Date.now()}`;
       await page.getByTestId("review-title-input").fill(updatedTitle);
       await page.getByTestId("review-submit-button").click();
 
-      await expect(page.getByText("Review was successfully updated.")).toBeVisible();
-      await expect(page.getByRole("heading", { name: updatedTitle })).toBeVisible();
+      await page.waitForURL(/\/courses\/\d+/);
+
+      await expect(page.getByText("口コミを更新しました。")).toBeVisible();
+      const reviewContainer = page.locator(`.bg-gray-50:has-text("${updatedTitle}")`).first();
+      await expect(reviewContainer).toBeVisible();
     });
 
     test("user can delete their own review", async ({ page }) => {
@@ -120,9 +124,11 @@ test.describe("Course and Review", () => {
       // Go to the review and delete it
       await page.getByRole("link", { name: titleToDelete }).click();
       page.on("dialog", dialog => dialog.accept());
-      await page.getByRole("button", { name: "Delete" }).click();
+      await page.getByRole("button", { name: "削除" }).click();
+
+      await page.waitForURL(/\/courses\/\d+/);
       
-      await expect(page.getByText("Review was successfully destroyed.")).toBeVisible();
+      await expect(page.getByText("口コミを削除しました。")).toBeVisible();
       await expect(page.getByText(titleToDelete)).not.toBeVisible();
     });
 
@@ -150,8 +156,8 @@ test.describe("Course and Review", () => {
       await page2.goto("/courses/1");
 
       const reviewContainer = page2.locator(`.bg-gray-50:has-text("${reviewTitle}")`).first();
-      await expect(reviewContainer.getByRole("link", { name: "Edit" })).not.toBeVisible();
-      await expect(reviewContainer.getByRole("button", { name: "Delete" })).not.toBeVisible();
+      await expect(reviewContainer.getByRole("link", { name: "編集" })).not.toBeVisible();
+      await expect(reviewContainer.getByRole("button", { name: "削除" })).not.toBeVisible();
       await page2.close();
     });
 
@@ -162,11 +168,11 @@ test.describe("Course and Review", () => {
       await page.getByTestId("review-rating-input").fill("5");
       await page.getByTestId("review-content-input").fill("This is the first review.");
       await page.getByTestId("review-submit-button").click();
-      await expect(page.getByText("Review was successfully created.")).toBeVisible();
+      await expect(page.getByText("口コミを投稿しました。")).toBeVisible();
 
       // Attempt to submit a second review
       await page.goto("/courses/1/reviews/new");
-      await expect(page.getByText("You have already reviewed this course.")).toBeVisible();
+      await expect(page.getByText("この授業には既に口コミを投稿しています。")).toBeVisible();
       await expect(page).toHaveURL("/courses/1");
     });
 
@@ -184,13 +190,15 @@ test.describe("Course and Review", () => {
       const reviewContainer = page.locator(`.bg-gray-50:has-text("${reviewTitle}")`).first();
 
       // React to the review
-      await reviewContainer.getByRole("button", { name: /👍 Helpful/ }).click();
-      await expect(page.getByText("Reaction saved.")).toBeVisible();
-      await expect(reviewContainer.getByRole("button", { name: "👍 Helpful (1)" })).toBeVisible();
+      await reviewContainer.getByRole("button", { name: /👍 参考になった/ }).click();
+      await page.waitForURL(/\/courses\/\d+/);
+      await expect(page.getByText("リアクションを保存しました。")).toBeVisible();
+      await expect(reviewContainer.getByRole("button", { name: "👍 参考になった (1)" })).toBeVisible();
 
       // Change reaction
-      await reviewContainer.getByRole("button", { name: /👎 Not Helpful/ }).click();
-      await expect(page.getByText("Reaction saved.")).toBeVisible();
+      await reviewContainer.getByRole("button", { name: /👎 参考にならなかった/ }).click();
+      await page.waitForURL(/\/courses\/\d+/);
+      await expect(page.getByText("リアクションを保存しました。")).toBeVisible();
       await expect(reviewContainer.getByRole("button", { name: "👍 Helpful (0)" })).toBeVisible();
       await expect(reviewContainer.getByRole("button", { name: "👎 Not Helpful (1)" })).toBeVisible();
     });
@@ -207,10 +215,9 @@ test.describe("Course and Review", () => {
       // Click the link to write a review
       await page.getByTestId("write-review-link").click();
 
-      // Check that we are redirected to the login page
       await expect(page).toHaveURL("/login");
       await expect(
-        page.getByText("You must be logged in to access this section.")
+        page.getByText("ログインが必要です。")
       ).toBeVisible();
     });
 
@@ -221,6 +228,16 @@ test.describe("Course and Review", () => {
       await expect(
         page.getByText("You must be logged in to access this section.")
       ).toBeVisible();
+    });
+
+    test("unauthenticated user cannot see reaction buttons", async ({ page }) => {
+      // Create a review as an authenticated user (using beforeEach of the authenticated block implicitly or explicitly)
+      // For this test, we can just navigate to a course page with existing reviews (assuming seed data)
+      await page.goto("/courses/1");
+
+      // Verify reaction buttons are not visible
+      await expect(page.getByRole("button", { name: /👍 参考になった/ })).not.toBeVisible();
+      await expect(page.getByRole("button", { name: /👎 参考にならなかった/ })).not.toBeVisible();
     });
   });
 });

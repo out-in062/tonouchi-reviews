@@ -1,9 +1,9 @@
 # app/controllers/reviews_controller.rb
 class ReviewsController < ApplicationController
-  before_action :require_login, except: [:show] # Show action does not require login
-  before_action :set_course, only: [:new, :create]
-  before_action :set_review, only: [:show, :edit, :update, :destroy]
-  before_action :require_author, only: [:edit, :update, :destroy]
+  before_action :require_login, except: [ :show ] # Show action does not require login
+  before_action :set_course, only: [ :new, :create ]
+  before_action :set_review, only: [ :show, :edit, :update, :destroy ]
+  before_action :require_author, only: [ :edit, :update, :destroy ]
 
   def new
     if @course.reviews.exists?(user: current_user)
