@@ -3,11 +3,11 @@
 <%= form_with(model: (@review.new_record? ? [@course, @review] : @review)) do |form| %>
   <% if @review.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
-
+      <h2><%= t('activerecord.errors.template.header', count: @review.errors.count) %></h2>
+      <p><%= t('activerecord.errors.template.body') %></p>
       <ul>
-        <% @review.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% @review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>

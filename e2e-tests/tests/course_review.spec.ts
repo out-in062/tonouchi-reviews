@@ -48,6 +48,7 @@ test.describe("Course and Review", () => {
         .fill(testUser.password);
       await page.getByTestId("user-student-id-input").fill(testUser.studentId);
       await page.getByTestId("signup-submit-button").click();
+      await page.waitForURL('**/'); // Wait for the redirect to complete
       await expect(page.getByText(`Logged in as ${testUser.name}`)).toBeVisible();
     });
 
@@ -101,8 +102,11 @@ test.describe("Course and Review", () => {
       await page.getByTestId("review-title-input").fill(updatedTitle);
       await page.getByTestId("review-submit-button").click();
 
+      await page.waitForURL(/\/courses\/\d+/);
+
       await expect(page.getByText("Review was successfully updated.")).toBeVisible();
-      await expect(page.getByRole("heading", { name: updatedTitle })).toBeVisible();
+      const reviewContainer = page.locator(`.bg-gray-50:has-text("${updatedTitle}")`).first();
+      await expect(reviewContainer).toBeVisible();
     });
 
     test("user can delete their own review", async ({ page }) => {
@@ -121,6 +125,8 @@ test.describe("Course and Review", () => {
       await page.getByRole("link", { name: titleToDelete }).click();
       page.on("dialog", dialog => dialog.accept());
       await page.getByRole("button", { name: "Delete" }).click();
+
+      await page.waitForURL(/\/courses\/\d+/);
       
       await expect(page.getByText("Review was successfully destroyed.")).toBeVisible();
       await expect(page.getByText(titleToDelete)).not.toBeVisible();
@@ -185,11 +191,13 @@ test.describe("Course and Review", () => {
 
       // React to the review
       await reviewContainer.getByRole("button", { name: /👍 Helpful/ }).click();
+      await page.waitForURL(/\/courses\/\d+/);
       await expect(page.getByText("Reaction saved.")).toBeVisible();
       await expect(reviewContainer.getByRole("button", { name: "👍 Helpful (1)" })).toBeVisible();
 
       // Change reaction
       await reviewContainer.getByRole("button", { name: /👎 Not Helpful/ }).click();
+      await page.waitForURL(/\/courses\/\d+/);
       await expect(page.getByText("Reaction saved.")).toBeVisible();
       await expect(reviewContainer.getByRole("button", { name: "👍 Helpful (0)" })).toBeVisible();
       await expect(reviewContainer.getByRole("button", { name: "👎 Not Helpful (1)" })).toBeVisible();

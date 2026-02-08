@@ -1,3 +1,3 @@
-<h1><%= @course.name %>のレビューを投稿する</h1>
+<h1><%= t(".title", course_name: @course.name) %></h1>
 
 <%= render 'reviews/form', review: @review, course: @course %>

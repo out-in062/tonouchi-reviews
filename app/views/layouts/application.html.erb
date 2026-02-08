@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Tonouchi Class Reviews" %></title>
+    <title><%= content_for(:title) || t(".title") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -26,16 +26,17 @@
     <header class="bg-white shadow-md">
       <nav class="container mx-auto flex justify-between items-center p-4">
         <div>
-          <%= link_to "Tonouchi Class Reviews", root_path, class: "text-xl font-bold", data: { testid: "home-link" } %>
-          <%= link_to "Courses", courses_path, class: "ml-4 text-blue-600 hover:text-blue-800", data: { testid: "courses-link" } %>
+          <%= link_to t(".title"), root_path, class: "text-xl font-bold", data: { testid: "home-link" } %>
+          <%= link_to t(".courses"), courses_path, class: "ml-4 text-blue-600 hover:text-blue-800", data: { testid: "courses-link" } %>
+          <%= link_to t(".syllabus"), "/syllabuses", class: "ml-4 text-blue-600 hover:text-blue-800", data: { testid: "syllabus-link" } %>
         </div>
         <div>
           <% if current_user %>
-            <span class="mr-4">Logged in as <%= current_user.name %></span>
-            <%= button_to "Log out", logout_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", data: { testid: "logout-button" } %>
+            <span class="mr-4"><%= t(".logged_in_as", name: current_user.name) %></span>
+            <%= button_to t(".log_out"), logout_path, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded", data: { testid: "logout-button" } %>
           <% else %>
-            <%= link_to "Sign up", signup_path, class: "mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded", data: { testid: "signup-link" } %>
-            <%= link_to "Log in", login_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded", data: { testid: "login-link" } %>
+            <%= link_to t(".sign_up"), signup_path, class: "mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded", data: { testid: "signup-link" } %>
+            <%= link_to t(".log_in"), login_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded", data: { testid: "login-link" } %>
           <% end %>
         </div>
       </nav>

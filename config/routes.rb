@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "courses#index" # syllabuses#index より courses#index の方が一般的かと思われます
 
+  get '/syllabuses', to: 'syllabuses#index'
+
   # ログイン/ログアウト/ユーザー登録
   get    "login"   => "sessions#new"
   post   "login"   => "sessions#create"

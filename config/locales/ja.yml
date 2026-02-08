@@ -1,4 +1,75 @@
 ja:
+  layouts:
+    application:
+      title: 殿内授業レビュー
+      courses: 授業一覧
+      syllabus: シラバス
+      logged_in_as: 'ログイン中: %{name}'
+      log_out: ログアウト
+      sign_up: 新規登録
+      log_in: ログイン
+  courses:
+    index:
+      instructor: 担当教員
+    show:
+      instructor: 担当教員
+      code: 授業コード
+      write_review: 口コミを書く
+      info_title: 授業情報
+      department: 学部・学科
+      semester: 開講学期
+      year: 開講年度
+      credits: 単位数
+      description_title: 授業概要
+      reviews_title: 口コミ
+      no_reviews: まだ口コミがありません。最初の口コミを投稿しよう！
+      back_to_courses: 授業一覧に戻る
+  reviews:
+    review:
+      rating: 評価
+      posted_by: '投稿者: %{name}'
+      helpful: '👍 参考になった'
+      not_helpful: '👎 参考にならなかった'
+      edit: 編集
+      delete: 削除
+      confirm_delete: 本当に削除しますか？
+    new:
+      title: '%{course_name}の口コミを投稿する'
+      rating: 総合評価
+      difficulty: 難易度
+      workload: 課題量
+      content: 口コミ本文
+      attendance_required: 出席
+      exam_info: 試験情報
+      tips: アドバイス・コツ
+      semester_taken: 受講学期
+      year_taken: 受講年度
+    edit:
+      title: '%{course_name}の口コミを編集する'
+      rating: 総合評価
+      difficulty: 難易度
+      workload: 課題量
+      content: 口コミ本文
+      attendance_required: 出席
+      exam_info: 試験情報
+      tips: アドバイス・コツ
+      semester_taken: 受講学期
+      year_taken: 受講年度
+  sessions:
+    new:
+      title: ログイン
+      email: メールアドレス
+      password: パスワード
+      submit: ログイン
+  users:
+    new:
+      title: 新規登録
+      name: 名前
+      email: メールアドレス
+      password: パスワード
+      password_confirmation: パスワード（確認）
+      student_id: 学籍番号
+      submit: 新規登録
   helpers:
     submit:
       create: 登録する
@@ -23,14 +94,23 @@ ja:
         tips: アドバイス・コツ
         semester_taken: 受講学期
         year_taken: 受講年度
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+        student_id: 学籍番号
     errors:
-      messages:
-        blank: を入力してください
+      template:
+        header:
+          one: '1件のエラーが発生しました:'
+          other: '%{count}件のエラーが発生しました:'
+        body: '次の項目を確認してください:'
   syllabuses:
     index:
       title: シラバス一覧
     new:
-      link: 新しいシラバス
+      link: 新らしいシラバス
     show:
       link: 詳細
     create:
@@ -39,15 +119,3 @@ ja:
       notice: シラバスを更新しました。
     destroy:
       notice: シラバスを削除しました。
-  reviews:
-    new:
-      rating: 総合評価
-      difficulty: 難易度
-      workload: 課題量
-      title: タイトル
-      content: 口コミ本文
-      attendance_required: 出席
-      exam_info: 試験情報
-      tips: アドバイス・コツ
-      semester_taken: 受講学期
-      year_taken: 受講年度

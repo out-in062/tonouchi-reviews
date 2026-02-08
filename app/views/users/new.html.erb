@@ -1,45 +1,45 @@
-<h1>Sign up</h1>
+<h1><%= t(".title") %></h1>
 
 <%# urlオプションを削除し、Railsにパスの解決を任せます %>
 <%= form_with(model: @user) do |form| %>
   <% if @user.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+      <h2><%= t('activerecord.errors.template.header', count: @user.errors.count) %></h2>
+      <p><%= t('activerecord.errors.template.body') %></p>
       <ul>
-        <% @user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div>
-    <%= form.label :name %><br>
+    <%= form.label :name, t(".name") %><br>
     <%= form.text_field :name, data: { testid: "user-name-input" } %>
   </div>
 
   <div>
-    <%= form.label :email %><br>
+    <%= form.label :email, t(".email") %><br>
     <%= form.email_field :email, data: { testid: "user-email-input" } %>
   </div>
 
   <div>
-    <%= form.label :password %><br>
+    <%= form.label :password, t(".password") %><br>
     <%= form.password_field :password, data: { testid: "user-password-input" } %>
   </div>
 
   <div>
-    <%= form.label :password_confirmation %><br>
+    <%= form.label :password_confirmation, t(".password_confirmation") %><br>
     <%= form.password_field :password_confirmation, data: { testid: "user-password-confirmation-input" } %>
   </div>
 
   <div>
-    <%= form.label :student_id %><br>
+    <%= form.label :student_id, t(".student_id") %><br>
     <%= form.text_field :student_id, data: { testid: "user-student-id-input" } %>
   </div>
 
   <div>
-    <%= form.submit "Sign up", data: { testid: "signup-submit-button" } %>
+    <%= form.submit t(".submit"), data: { testid: "signup-submit-button" } %>
   </div>
 <% end %>

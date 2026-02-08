@@ -1,24 +1,24 @@
 <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
   <h3 class="font-semibold text-lg text-gray-900"><%= link_to review.title, review_path(review) %></h3>
-  <p class="text-gray-600">Rating: <%= review.rating %> / 5</p>
+  <p class="text-gray-600"><%= t(".rating") %>: <%= review.rating %> / 5</p>
   <p class="mt-2 text-gray-800"><%= review.content %></p>
-  <p class="mt-2 text-sm text-gray-500" data-testid="review-author">Posted by: <%= review.user.name %> for this course</p>
+  <p class="mt-2 text-sm text-gray-500" data-testid="review-author"><%= t(".posted_by", name: review.user.name) %></p>
 
   <div class="mt-4 flex items-center">
     <%= form_with(model: [review, ReviewReaction.new], url: review_review_reactions_path(review), method: :post) do |form| %>
       <%= form.hidden_field :reaction_type, value: 'helpful' %>
-      <%= form.submit "👍 Helpful (#{review.review_reactions.where(reaction_type: 'helpful').count})", class: "text-sm bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" %>
+      <%= form.submit "#{t(".helpful")} (#{review.review_reactions.where(reaction_type: 'helpful').count})", class: "text-sm bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" %>
     <% end %>
     <%= form_with(model: [review, ReviewReaction.new], url: review_review_reactions_path(review), method: :post, class: "ml-2") do |form| %>
       <%= form.hidden_field :reaction_type, value: 'not_helpful' %>
-      <%= form.submit "👎 Not Helpful (#{review.review_reactions.where(reaction_type: 'not_helpful').count})", class: "text-sm bg-orange-500 hover:bg-orange-700 text-white font-bold py-1 px-2 rounded" %>
+      <%= form.submit "#{t(".not_helpful")} (#{review.review_reactions.where(reaction_type: 'not_helpful').count})", class: "text-sm bg-orange-500 hover:bg-orange-700 text-white font-bold py-1 px-2 rounded" %>
     <% end %>
   </div>
 
   <% if current_user == review.user %>
     <div class="mt-4">
-      <%= link_to "Edit", edit_review_path(review), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 text-sm rounded" %>
-      <%= button_to "Delete", review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 text-sm rounded ml-2" %>
+      <%= link_to t(".edit"), edit_review_path(review), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 text-sm rounded" %>
+      <%= button_to t(".delete"), review_path(review), method: :delete, data: { confirm: t(".confirm_delete") }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 text-sm rounded ml-2" %>
     </div>
   <% end %>
 </div>
